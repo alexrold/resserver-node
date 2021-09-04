@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const { dbConnection } = require('../database/config.db');
 
 class Server {
   constructor() {
@@ -9,11 +10,18 @@ class Server {
     //* RoutePath
     this.usuariosRoutePath = '/api/usuarios';
 
+    //* conectar a base de datos-
+    this.conectarDB();
+
     //* Middelwares-
     this.middelwares();
 
     //* Rutas-
     this.routes();
+  }
+
+  async conectarDB() {
+    await dbConnection();
   }
 
   middelwares() {
@@ -33,7 +41,7 @@ class Server {
 
   listem() {
     this.app.listen(this.port, () => {
-      console.log('Servidor corriendo en el puerto', this.port);
+      console.log('Server running on port ', this.port);
     });
   }
 }
