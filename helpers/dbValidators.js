@@ -22,8 +22,10 @@ const existeUsuarioById = async (id) => {
   const existeUsuario = await Usuario.findById(id);
   if (!existeUsuario) {
     throw new Error(`El ID-'${id}' no existe.`);
-  } else if (existeUsuario.estado === false) {
-    throw new Error(`El ID-'${id}' no esta disponible.`);
+  } else if (!existeUsuario.estado) {
+    throw new Error(
+      `El ID-'${id}' no esta accesible, comuniquese con el administrador.`
+    );
   }
 };
 

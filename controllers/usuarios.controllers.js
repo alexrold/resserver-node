@@ -47,7 +47,7 @@ const usuariosPut = async (req = request, res = response) => {
     resto.passwd = bcryptjs.hashSync(passwd, salt);
   }
   // Actualizar usuario-
-  const usuario = await Usuario.findByIdAndUpdate(id, resto);
+  const usuario = await Usuario.findByIdAndUpdate({ _id: id }, resto);
 
   res.json(usuario);
 };
@@ -64,7 +64,13 @@ const usuariosDelete = async (req = request, res = response) => {
   const { id } = req.params;
 
   // actualiza el estado del usuario a FALSE-
-  const usuario = await Usuario.findOneAndUpdate(id, { estado: false });
+  const usuario = await Usuario.findOneAndUpdate(
+    { _id: id },
+    { estado: false }
+  );
+  // usuario autenticado
+  const usuarioAutenticado = req.usuario;
+
   res.json({
     usuario,
   });
