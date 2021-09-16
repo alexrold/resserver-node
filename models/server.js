@@ -8,8 +8,13 @@ class Server {
     this.port = process.env.PORT;
 
     //* RoutePath
-    this.authRoutePath = '/api/auth';
-    this.usuariosRoutePath = '/api/usuarios';
+    this.path = {
+      auth: '/api/auth',
+      buscar: '/api/buscar',
+      categorias: '/api/categorias',
+      productos: '/api/productos',
+      usuarios: '/api/usuarios',
+    };
 
     //* conectar a base de datos-
     this.conectarDB();
@@ -37,8 +42,11 @@ class Server {
   }
 
   routes() {
-    this.app.use(this.authRoutePath, require('../routes/auth.router'));
-    this.app.use(this.usuariosRoutePath, require('../routes/usuarios.router'));
+    this.app.use(this.path.auth, require('../routes/auth.routes'));
+    this.app.use(this.path.buscar, require('../routes/buscar.routes'));
+    this.app.use(this.path.categorias, require('../routes/categorias.routes'));
+    this.app.use(this.path.productos, require('../routes/productos.routes'));
+    this.app.use(this.path.usuarios, require('../routes/usuarios.routes'));
   }
 
   listem() {
